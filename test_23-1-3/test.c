@@ -24,7 +24,7 @@ int main(void)//int说明main函数执行后会返回一个整型值 main函数是程序的入口
 	printf("-------------------\n");
 	int num = 10;
 	printf("%d\n",num);
-	pprintf("--------------------------\n");
+	printf("--------------------------\n");
 	int num1 = 0;
 	int num2 = 0;
 	scanf("%d %d", &num1, &num2);
