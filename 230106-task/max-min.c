@@ -20,7 +20,7 @@ int main()
     int n = 0;
     int i = 0;
     scanf("%d", &n);
-    int arr[(int)n];
+    int arr[10];
     int sco, Maxsco, Minsco;
     if (n == 1)
         printf("0");
