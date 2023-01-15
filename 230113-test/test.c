@@ -227,19 +227,51 @@
 //	scanf("%d", &n);
 //	printf("%d", step(n));
 //}
+//
+//#include <stdio.h>
+//void prt(int n)
+//{
+//	if (n > 9)
+//	{
+//		prt(n / 10);
+//	}
+//	printf("%d ", n % 10);
+//}
+//int main()
+//{
+//	int n;
+//	scanf("%d", &n);
+//	prt(n);
+//}
 
 #include <stdio.h>
-void prt(int n)
+void reverse_string(char* string)
 {
-	if (n > 9)
-	{
-		prt(n / 10);
-	}
-	printf("%d ", n % 10);
+    char arr1 = 0;
+    int i = 0;
+    if (*string == '\n');                           //判断第1个字符是否为’\n'，是则停止递归
+
+    else
+    {
+        for (i = 0; *(string + i + 1) != '\0'; i++);   //计算新指针到'\0'的长度是i+1
+
+        arr1 = *string;                              //先把新指针指向第一个地址里的数提*string出来放到arr1里     
+        *string = *(string + i);                     //把最后面的数*(string + i)放在指向的第一个地址*string里
+
+        for (; i > 1; i--)                           //从新指针第二个数到第i+1依次往后移
+        {
+            *(string + i) = *(string + i - 1);
+        }
+
+        *(string + i) = arr1;                        //把arr1里数赋值给第二个数
+
+        reverse_string((string + 1));                //否则把（string+1）地址给新string指针
+    }
 }
+
 int main()
 {
-	int n;
-	scanf("%d", &n);
-	prt(n);
+    char arr[8] = "hahahehe";
+    reverse_string(&arr);
+    printf("%s", arr);S
 }
