@@ -14,15 +14,17 @@ void game()
 	char board[ROW][COL] = { 0 };
 	InitBoard(board, ROW, COL);
 	DisplayBoard(board, ROW, COL);
-
+	char ret = 0;
 	while (1)
-
 	{
-		int ret = 0;
+
+
 		//ÕÊº“œ¬∆Â
-		PlayerMove();
+		PlayerMove(board, ROW, COL);
+
 		//¥Ú”°∆Â≈Ã
-		DisplayBoard();
+		DisplayBoard(board, ROW, COL);
+
 		//≈–∂œ ‰”Æ
 		ret = IsWin(board, ROW, COL);
 		if (ret != 'C')
@@ -30,12 +32,29 @@ void game()
 			break;
 		}
 
-
 		//µÁƒ‘œ¬∆Â
-		ComuputerMove(board, ROW, COL);
+		ComputerMove(board, ROW, COL);
 		DisplayBoard(board, ROW, COL);
 		//≈–∂œ ‰”Æ
+		ret = IsWin(board, ROW, COL);
+		if (ret != 'C')
+		{
+			break;
+		}
 	}
+	if (ret == '*')
+	{
+		printf("ÕÊº“”Æ\n");
+	}
+	else if (ret == '#')
+	{
+		printf("µÁƒ‘”Æ\n");
+	}
+	else if (ret == 'Q')
+	{
+		printf("∆Ωæ÷\n");
+	}
+
 
 }
 
@@ -44,7 +63,6 @@ int main()
 {
 	int input = 0;
 	srand((unsigned int)time(NULL));
-	int input = 0;
 	do
 	{
 		menu();
