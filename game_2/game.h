@@ -6,17 +6,18 @@
 #define COLS COL+2
 #define EAEY_COUNT 10
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 
+//≥ı ºªØ∆Â≈Ã
+void InitBoard(char board[ROWS][COLS], int rows, int cols, char set);
 
-
-
-
-
-
+//¥Ú”°∆Â≈Ã
+void DisplayBoard(char board[ROWS][COLS], int rows, int cols);
 
 //≤º÷√¿◊
-SetMine(char mine[ROW][COL])
-{
+void SetMine(char mine[ROW][COL], int rows, int cols);
 
-}
+//≈≈≤È¿◊
+void FineMine(char mine[ROWS][COLS],)
