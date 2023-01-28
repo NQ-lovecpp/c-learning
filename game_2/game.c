@@ -4,12 +4,11 @@
 #include "game.h"
 
 void InitBoard(char board[ROWS][COLS],int rows,int cols,char set)
-{
-	int i = 0;
+{	int i = 0;
 	int j = 0;
 	for (i = 0;i < rows; i++)
 	{
-		for (i = 0;i < cols; j++)
+		for (j = 0;j < cols; j++)
 		{
 			board[i][j] = set;
 		}
@@ -32,20 +31,19 @@ void DisplayBoard(char board[ROWS][COLS], int row, int col)
 		for (j = 1;j <= col;j++)
 		{
 			printf("%c ", board[i][j]);
-
 		}
 		printf("\n");
 	}
 }
 
 
-void SetMine(char mine[ROW][COL], int row, int cow)
+void SetMine(char mine[ROW][COL], int row, int col)
 {
-	int count = EASY_COUNT;
+	int count = EAEY_COUNT;
 	while (count)
 	{
-		int rand() % row + 1;
-		int rand() % col + 1;
+		int x=rand() % row + 1;
+		int y=rand() % col + 1;
 		if (mine[x][y] == "0")
 		{
 			mine[x][y] = '1';
@@ -67,15 +65,47 @@ int GetMineCount(char mine[ROW][COL], int x, int y)
 		mine[x - 1][y + 1] - 8 * '0');
 }
 
-void FineMine(char mine[ROWS][COLS], char[ROWS][COLS], int row, int col)
+void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 {
 	int x = 0;
 	int y = 0;
 	int win = 0;
-	while (win < row * col - EASY_COUNT)
+	while (win < row * col - EAEY_COUNT)
 	{
 		printf("请输入要排查的坐标:>");
 		scanf("% %d", &x, &y);
-		if (x>=1 && x<=row &&y>=)
+		if (x >= 1 && x <= row && y >= 1 && y <= col)
+		{
+			if ( show[x][y] == '*')
+			{
+				if (mine[x][y] == '1')
+				{
+					printf("很遗憾，你被炸死\n");
+					DisplayBoard(mine, ROW, COL);
+					break;
+				}
+				else
+				{
+					int count = GetMineCount(mine, x, y);
+					show[x][y] = count + '0';
+					DisplayBoard(mine, ROW, COL);
+					win++;
+
+				}
+			}
+			else
+			{
+				printf("该位置已经被排查\n");
+			}
+		}
+		else
+		{
+			printf("排查的坐标非法，请重新输入\n");
+		}
+	}
+	if (win == row * col - EAEY_COUNT)
+	{
+		printf("恭喜你，排雷成功\n");
+		DisplayBoard(mine, ROW, COL);
 	}
 }

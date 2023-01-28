@@ -20,4 +20,4 @@ void DisplayBoard(char board[ROWS][COLS], int rows, int cols);
 void SetMine(char mine[ROW][COL], int rows, int cols);
 
 //ÅÅ²éÀ×
-void FineMine(char mine[ROWS][COLS],)
+void FineMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col);
