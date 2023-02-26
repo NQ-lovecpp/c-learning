@@ -116,14 +116,27 @@
 //	printf("%f", v);
 //}
 
-#include <stdio.h>
-float divide(float a)
-{
-	return 1 / (1 + a);
-}
-int main()
-{
-	float x, y;
-	scanf("%f %f", &x, &y);
-	printf("%f", divide(divide(1 / (x + y))));
-}
+//#include <stdio.h>
+//float divide(float a)
+//{
+//	return 1 / (1 + a);
+//}
+//int main()
+//{
+//	float x, y;
+//	scanf("%f %f", &x, &y);
+//	printf("%f", divide(divide(1 / (x + y))));
+//}
+
+//#include <stdio.h>
+//int main()
+//{
+//	float a;
+//	scanf("%f", &a);
+//	if (a == 10 || a == 8 || a == 16)
+//	{
+//		printf("10");
+//	}
+//	return 0;
+//}
+
