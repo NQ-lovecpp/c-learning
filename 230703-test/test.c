@@ -210,7 +210,7 @@ void AdjustDown(int* a, int n, int parent)
 void HeapSortAsc(int* a, int n)
 {
     // 构建最大堆
-    for (int i = n / 2 - 1; i >= 0; --i)
+    for (int i = (n - 2) / 2; i >= 0; --i)
     {
         AdjustDown(a, n, i);
     }
@@ -220,13 +220,12 @@ void HeapSortAsc(int* a, int n)
     {
         Swap(&a[0], &a[i]);
         AdjustDown(a, i, 0);
-    }
 }
 
 void HeapSortDesc(int* a, int n)
 {
     // 构建最小堆
-    for (int i = n / 2 - 1; i >= 0; --i)
+    for (int i = (n - 2) / 2; i >= 0; --i)
     {
         AdjustUp(a, i);
     }
@@ -241,7 +240,7 @@ void HeapSortDesc(int* a, int n)
 
 int main()
 {
-    int arr[10] = { 9, 5, 3, 7, 2, 8, 6, 1, 4, 10 };
+    int arr[10] = { 65,49,76,32,85,42,72,50,99,20 };
 
     // 升序排序
     HeapSortAsc(arr, 10);
