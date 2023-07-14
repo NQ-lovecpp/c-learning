@@ -1,5 +1,5 @@
 #include "Sort.h"
-
+#include "Stack.h"
 void PrintArray(int* a, int n)
 {
 	for (int i = 0; i < n; ++i)
@@ -277,14 +277,277 @@ int PartSort2(int* a, int left, int right)
 	return hole;
 }
 
+//前后指针法
+int PartSort3(int* arr, int left, int right)
+{
+	int key = left;
+	int prev = left;
+	int cur = left + 1;
+
+	while (cur <= right)
+	{
+		//arr[cur]小于基准值就交换
+		if (arr[cur] <= arr[key] && ++prev != cur)	//这里做了优化：如果prev+1等于cur则不用交换，该语句顺便将prev加一
+		{
+			Swap(&arr[cur], &arr[prev]);
+		}
+		cur++;
+	}
+
+	Swap(&arr[key], &arr[prev]);
+	return prev;
+}
+
 void QuickSort(int* a, int begin, int end)
 {
 	if (begin >= end)
 	{
 		return;
 	}
-	int keyi = PartSort2(a, begin, end);
+	int keyi = PartSort3(a, begin, end);
 
 	QuickSort(a, begin, keyi - 1);
 	QuickSort(a, keyi + 1, end);
+}
+
+void QuickSortNonR(int* a, int begin, int end)
+{
+	ST st;
+	STInit(&st);
+	STPush(&st, end);
+	STPush(&st, begin);
+
+	while (!STEmpty(&st))
+	{
+		int left = STTop(&st);
+		STPop(&st);
+
+		int right = STTop(&st);
+		STPop(&st);
+
+		int keyi = PartSort3(a, left, right);
+
+		if (keyi + 1 < right)
+		{
+			STPush(&st, right);
+			STPush(&st, keyi+1);
+		}
+
+		if (left < keyi - 1)
+		{
+			STPush(&st, keyi - 1);
+			STPush(&st, left);
+		}
+	}
+}
+
+void _MergeSort(int* a, int begin,int end,int* tmp)
+{
+	if (begin == end)
+	{
+		return;
+	}
+
+	//小区间优化
+	if (end - begin + 1 < 10)
+	{
+		InsertSort(a+begin, end - begin + 1);
+		return;
+	}
+	int mid = (begin + end)/2;
+	_MergeSort(a, begin, mid, tmp);
+	_MergeSort(a, mid+1, end, tmp);
+
+	int begin1 = begin, end1 = mid;
+	int begin2 = mid + 1, end2 = end;
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (a[begin1] < a[begin2])
+		{
+			tmp[i++] = a[begin1++];
+		}
+		else
+		{
+			tmp[i++] = a[begin2++];
+		}
+	}
+
+	while (begin1<=end1)
+	{
+		tmp[i++] = a[begin1++];
+	}
+	while (begin2 <= end2)
+	{
+		tmp[i++] = a[begin2++];
+	}
+	memcpy((a+begin), tmp+begin,sizeof(int)*(end-begin+1));
+}
+
+void MergeSort(int* a, int n)
+{
+	int* tmp = malloc(sizeof(int) * n);
+	_MergeSort(a, 0, n - 1,tmp);
+	free(tmp);
+}
+
+//void MergeSortNonR(int* a, int n)
+//{
+//	int* tmp = (int*)malloc(sizeof(int) * n);
+//
+//	// 1  2  4 ....
+//	int gap = 1;
+//	while (gap < n)
+//	{
+//		int j = 0;
+//		for (int i = 0; i < n; i += 2 * gap)
+//		{
+//			// 每组的合并数据
+//			int begin1 = i, end1 = i + gap - 1;
+//			int begin2 = i + gap, end2 = i + 2 * gap - 1;
+//
+//			printf("[%d,%d][%d,%d]\n", begin1, end1, begin2, end2);
+//
+//			if (end1 >= n || begin2 >= n)
+//			{
+//				break;
+//			}
+//
+//			// 修正
+//			if (end2 >= n)
+//			{
+//				end2 = n - 1;
+//			}
+//
+//			while (begin1 <= end1 && begin2 <= end2)
+//			{
+//				if (a[begin1] < a[begin2])
+//				{
+//					tmp[j++] = a[begin1++];
+//				}
+//				else
+//				{
+//					tmp[j++] = a[begin2++];
+//				}
+//			}
+//
+//			while (begin1 <= end1)
+//			{
+//				tmp[j++] = a[begin1++];
+//			}
+//
+//			while (begin2 <= end2)
+//			{
+//				tmp[j++] = a[begin2++];
+//			}
+//
+//			// 归并一组，拷贝一组
+//			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+//		}
+//		printf("\n");
+//
+//		//memcpy(a, tmp, sizeof(int) * n);
+//		gap *= 2;
+//	}
+//
+//	free(tmp);
+//}
+
+
+void MergeSortNonR(int* a, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+
+	// 1  2  4 ....
+	int gap = 1;
+	while (gap < n)
+	{
+		int j = 0;
+		for (int i = 0; i < n; i += 2 * gap)
+		{
+			// 每组的合并数据
+			int begin1 = i, end1 = i + gap - 1;
+			int begin2 = i + gap, end2 = i + 2 * gap - 1;
+
+			printf("[%d,%d][%d,%d]\n", begin1, end1, begin2, end2);
+
+			if (end1 >= n || begin2 >= n)
+			{
+				break;
+			}
+
+			// 修正
+			if (end2 >= n)
+			{
+				end2 = n - 1;
+			}
+
+			while (begin1 <= end1 && begin2 <= end2)
+			{
+				if (a[begin1] < a[begin2])
+				{
+					tmp[j++] = a[begin1++];
+				}
+				else
+				{
+					tmp[j++] = a[begin2++];
+				}
+			}
+
+			while (begin1 <= end1)
+			{
+				tmp[j++] = a[begin1++];
+			}
+
+			while (begin2 <= end2)
+			{
+				tmp[j++] = a[begin2++];
+			}
+
+			// 归并一组，拷贝一组
+			//memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+		}
+		printf("\n");
+
+		memcpy(a, tmp, sizeof(int) * n);
+		gap *= 2;
+	}
+
+	free(tmp);
+}
+
+void CountSort(int* a, int n)
+{
+	int min = a[0], max = a[0];
+	for (int i = 0;i < n;i++)
+	{
+		if (a[i] < min)
+		{
+			min = a[i];
+		}
+		if (a[i] > max)
+		{
+			max = a[i];
+		}
+
+	}
+	int range = max - min + 1;
+	int* countA = (int*)malloc(sizeof(int) * range);
+	memset(countA, 0, sizeof(int) * range);
+
+	for (int i = 0;i < n;i++)
+	{
+		countA[a[i] - min]++;
+	}
+
+	//排序
+	int k = 0;
+	for (int j = 0;j < range;j++)
+	{
+		while (countA[j]--)
+		{
+			a[k++] = j + min;
+		}
+	}
+
 }

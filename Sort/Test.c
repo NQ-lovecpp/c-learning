@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include"Sort.h"
+#include "Sort.h"
+#include "Stack.h"
 #include<time.h>
 
 void TestInsertSort()
@@ -48,7 +49,28 @@ void TestQuickSort()
 	printf("QuickSort:\n");
 	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
 	PrintArray(a, sizeof(a) / sizeof(int));
-	QuickSort(a, 0, (sizeof(a) / sizeof(int)) - 1);
+	//QuickSort(a, 0, (sizeof(a) / sizeof(int)) - 1);
+	QuickSortNonR(a, 0, (sizeof(a) / sizeof(int)) - 1);
+	PrintArray(a, sizeof(a) / sizeof(int));
+	printf("\n");
+}
+
+void TestMergeSort()
+{
+	printf("MergeSort:\n");
+	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
+	PrintArray(a, sizeof(a) / sizeof(int));
+	MergeSort(a, (sizeof(a) / sizeof(int)));
+	PrintArray(a, sizeof(a) / sizeof(int));
+	printf("\n");
+}
+
+void TestCountSort()
+{
+	printf("CountSort:\n");
+	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
+	PrintArray(a, sizeof(a) / sizeof(int));
+	CountSort(a, (sizeof(a) / sizeof(int)));
 	PrintArray(a, sizeof(a) / sizeof(int));
 	printf("\n");
 }
@@ -91,7 +113,7 @@ void TestOP()
 	int end4 = clock();
 
 	int begin5 = clock();
-	QuickSort(a5, N);
+	QuickSort(a5,0, N);
 	int end5 = clock();
 
 	printf("InsertSort:%d\n", end1 - begin1);
@@ -112,9 +134,10 @@ int main()
 {
 	//TestInsertSort();
 	//TestShellSort();
-	TestBubbleSort();
+	//TestBubbleSort();
 	//TestSelectSort();
-	TestQuickSort();
+	//TestQuickSort();
+	TestCountSort();
 
 	//TestOP();
 
