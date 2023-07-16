@@ -47,13 +47,13 @@ int PartSort(int* a, int left, int right)
 //挖坑法
 int PartSort2(int* a, int left, int right)
 {
-	int key = a[left];
-	int HoleIndex = left;
+	int Key = a[left];
+	int HoleIndex = left;//坑的下标
 
 	while (left < right)
 	{
 		// 右边找小
-		while (left < right && a[right] >= key)
+		while (left < right && a[right] >= Key)
 		{
 			--right;
 		}
@@ -61,7 +61,7 @@ int PartSort2(int* a, int left, int right)
 		a[HoleIndex] = a[right];
 		HoleIndex = right;
 		// 左边找大
-		while (left < right && a[left] <= key)
+		while (left < right && a[left] <= Key)
 		{
 			++left;
 		}
@@ -70,7 +70,7 @@ int PartSort2(int* a, int left, int right)
 		HoleIndex = left;
 	}
 
-	a[HoleIndex] = key;
+	a[HoleIndex] = Key;
 	return HoleIndex;
 }
 
@@ -84,7 +84,7 @@ int PartSort3(int* arr, int left, int right)
 	while (cur <= right)
 	{
 		//arr[cur]小于基准值就交换
-		if (arr[cur] <= arr[key] && ++prev != cur)	//这里做了优化：如果prev+1等于cur则不用交换，该语句顺便将prev加一
+		if (arr[cur] <= arr[key] && ++prev != cur)
 		{
 			Swap(&arr[cur], &arr[prev]);
 		}
@@ -101,7 +101,7 @@ void QuickSort(int* a, int begin, int end)
 	{
 		return;
 	}
-	int KeyIndex = PartSort(a, begin, end);
+	int KeyIndex = PartSort3(a, begin, end);
 
 	QuickSort(a, begin, KeyIndex - 1);
 	QuickSort(a, KeyIndex + 1, end);
