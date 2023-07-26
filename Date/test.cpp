@@ -158,43 +158,61 @@ public:
 	// >运算符重载
 	bool operator>(const Date& d)
 	{
-		
+		if ((*this - d) > 0)
+			return true;
+		else
+			return false;
 	}
 
 	// ==运算符重载
 	bool operator==(const Date& d)
 	{
-
+		if ((*this - d) == 0)
+			return true;
+		else
+			return false;
 	}
 
 	// >=运算符重载
 	bool operator >= (const Date& d)
 	{
-
+		if ((*this - d) >= 0)
+			return true;
+		else
+			return false;
 	}
 
 	// <运算符重载
 	bool operator < (const Date& d)
 	{
-
+		if ((*this - d) < 0)
+			return true;
+		else
+			return false;
 	}
 
 	// <=运算符重载
 	bool operator <= (const Date& d)
 	{
-
+		if ((*this - d) <= 0)
+			return true;
+		else
+			return false;
 	}
 
 	// !=运算符重载
 	bool operator != (const Date& d)
 	{
-
+		if ((*this - d) != 0)
+			return true;
+		else
+			return false;
 	}
 
 	// 日期-日期 返回天数
 	int operator-(const Date& d)
 	{
-		int i = 0;
+		//int i = 0;
 		//int retyear = _year - d._year;
 		//int retmonth = _month - d._month;
 		//int retday = _day - d._day;
@@ -205,27 +223,44 @@ public:
 
 		//	}
 		//}
-		long long dayt = _day;
-		for (i = _year;i > 0;i--)
+		//long long dayt = _day;
+		//for (i = _year;i > 0;i--)
+		//{
+		//	dayt += GetYearDay(i - 1);
+		//}
+		//for (i = _month;i > 0;i--)
+		//{
+		//	dayt += GetMonthDay(_year, _month - 1);
+		//}
+
+		//long long dayd = d._day;
+		//for (i = d._year;i > 0;i--)
+		//{
+		//	dayd += GetYearDay(i - 1);
+		//}
+		//for (i = d._month;i > 0;i--)
+		//{
+		//	dayd += GetMonthDay(d._year, d._month - 1);
+		//}
+		//return (int)(dayt - dayd + 1);
+
+
+		// 计算起始日期之前的天数
+		long long days1 = _year * 365 + _day;
+		for (int i = 1; i < _month; ++i) 
 		{
-			dayt += GetYearDay(i - 1);
-		}
-		for (i = _month;i > 0;i--)
-		{
-			dayt += GetMonthDay(_year, _month - 1);
+			days1 += GetMonthDay(_year,i);
+
 		}
 
-		long long dayd = d._day;
-		for (i = d._year;i > 0;i--)
+		// 计算结束日期之前的天数
+		long long days2 = d._year * 365 + d._day;
+		for (int i = 1; i < d._month; ++i) 
 		{
-			dayd += GetYearDay(i - 1);
-		}
-		for (i = d._month;i > 0;i--)
-		{
-			dayd += GetMonthDay(d._year, d._month - 1);
+			days2 += GetMonthDay(d._year, i);
 		}
 
-		return (int)(dayt - dayd);
+		return (int)(days1 - days2 + 1);
 	}
 
 private:
@@ -238,11 +273,21 @@ private:
 int main()
 {
 	Date d1(2021, 3, 1);
-	Date d2 = (2021, 3, 2);
+	Date d2(2020, 6, 9);
 	d1 = d1 - 1;
 	d1.Print();
 	//d1 = d1 + 759;
 	//d1.Print();
 	cout << d1 - d2 << endl;
+	cout << (bool)(d1 > d2) << endl;
+	cout << (bool)(d1 < d2) << endl;
+	cout << (bool)(d1 >= d2) << endl;
+	cout << (bool)(d1 <= d2) << endl;
+	cout << (bool)(d1 == d2) << endl;
+
 	return 0;
 }
+
+
+
+
