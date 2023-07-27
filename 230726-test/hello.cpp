@@ -1,0 +1,1 @@
+char str2[10] = "nihao";
