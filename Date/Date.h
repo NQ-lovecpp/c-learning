@@ -6,10 +6,13 @@ class Date
 {
 public:
 	// 打印日期
-	void Print();
+	void Print() const;
 
 	// 获取某年某月的天数
 	int GetMonthDay(int year, int month);
+
+	// 获取某年的天数
+	int GetYearDay(int year);
 
 	// 全缺省的构造函数
 	Date(int year = 1900, int month = 1, int day = 1);
