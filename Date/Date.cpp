@@ -229,5 +229,9 @@ int Date::operator-(const Date& d)
 	return (int)(days1 - days2 + 1);
 }
 
+//void Date::operator<<(ostream& out)
+//{
+//	out <<
+//}
 
 

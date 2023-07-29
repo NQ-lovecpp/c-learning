@@ -8,6 +8,8 @@ public:
 	// 打印日期
 	void Print() const;
 
+	void operator<<(ostream& out);
+
 	// 获取某年某月的天数
 	int GetMonthDay(int year, int month);
 
