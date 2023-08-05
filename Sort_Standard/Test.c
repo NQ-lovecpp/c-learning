@@ -53,9 +53,6 @@ void TestShellSort()
 	printf("ShellSort:\n");
 	int a[] = { 4,7,1,9,3,6,5,8,3,2,0 };
 	PrintArray(a, sizeof(a) / sizeof(int));
-	//InsertSort(a, sizeof(a) / sizeof(int));
-	//PrintArray(a, sizeof(a) / sizeof(int));
-
 	ShellSort(a, sizeof(a) / sizeof(int));
 	PrintArray(a, sizeof(a) / sizeof(int));
 }
@@ -177,7 +174,7 @@ int main()
 {
 	TestInsertSort();
 	TestInsertSort2();
-	//TestShellSort();
+	TestShellSort();
 	//TestBubbleSort();
 	//TestSelectSort();
 	//TestQuickSort();

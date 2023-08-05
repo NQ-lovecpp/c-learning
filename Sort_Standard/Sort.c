@@ -65,26 +65,53 @@ void InsertSort2(int* arr, int size)
 	}
 }
 
+//void ShellSort(int* arr, int size)
+//{
+//	// 1、gap > 1 预排序
+//	// 2、gap == 1 直接插入排序
+//
+//	int gap = size;
+//	while (gap > 1)
+//	{
+//		gap = gap / 3 + 1;  //调整希尔增量
+//		// gap = gap / 2;
+//		for (int i = 0; i < size - gap; ++i)
+//		{
+//			int end = i;
+//			int tmp = arr[end + gap];
+//			while (end >= 0)
+//			{
+//				if (arr[end] > tmp)
+//				{
+//					arr[end + gap] = arr[end];
+//					end -= gap;
+//				}
+//				else
+//				{
+//					break;
+//				}
+//			}
+//
+//			arr[end + gap] = tmp;
+//		}
+//	}
+//}
 
-void ShellSort(int* a, int n)
+void ShellSort(int* arr, int size)
 {
-	// 1、gap > 1 预排序
-	// 2、gap == 1 直接插入排序
-
-	int gap = n;
+	int gap = size;
 	while (gap > 1)
 	{
-		gap = gap / 3 + 1;  // +1可以保证最后一次一定是1
-		// gap = gap / 2;
-		for (int i = 0; i < n - gap; ++i)
+		gap = gap / 3 + 1;  //调整希尔增量
+		for (int i = 0; i < size; i++)
 		{
 			int end = i;
-			int tmp = a[end + gap];
+			int tmp = arr[end];
 			while (end >= 0)
 			{
-				if (a[end] > tmp)
+				if (arr[end-gap] > tmp)
 				{
-					a[end + gap] = a[end];
+					arr[end] = arr[end-gap];
 					end -= gap;
 				}
 				else
@@ -93,7 +120,7 @@ void ShellSort(int* a, int n)
 				}
 			}
 
-			a[end + gap] = tmp;
+			arr[end] = tmp;
 		}
 	}
 }
