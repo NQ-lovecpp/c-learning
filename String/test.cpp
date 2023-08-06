@@ -252,11 +252,17 @@ void test_string13()
 	cout << s1 << endl;
 }
 
-//
-//int main()
-//{
-//	test_string13();
-//
-//	
-//	return 0;
-//}
+
+int main()
+{
+	//test_string13();
+	char str1[] = "hello world";
+	char str2[] = "±ÈÌØ";
+	u32string str3;
+
+	cout << sizeof(str1) << endl;
+	cout << sizeof(str2) << endl;
+	cout << sizeof(str3) << endl;
+	
+	return 0;
+}
