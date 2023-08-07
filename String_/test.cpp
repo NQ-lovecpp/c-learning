@@ -4,7 +4,6 @@
 #include <vector>
 #include <list>
 #include <string>
-#include <cassert>
 
 using namespace std;
 #include "string.h"

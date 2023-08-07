@@ -172,11 +172,13 @@ void TestOP()
 
 int main()
 {
-	TestInsertSort();
-	TestInsertSort2();
-	TestShellSort();
-	//TestBubbleSort();
-	//TestSelectSort();
+	//TestInsertSort();
+	//TestInsertSort2();
+	//TestShellSort();
+
+	TestBubbleSort();
+	TestSelectSort();
+
 	//TestQuickSort();
 	//TestCountSort();
 

@@ -255,14 +255,22 @@ void test_string13()
 
 int main()
 {
-	//test_string13();
-	char str1[] = "hello world";
-	char str2[] = "比特";
-	u32string str3;
+	////test_string13();
+	//char str1[] = "hello world";
+	//char str2[] = "比特";
+	//u32string str3;
 
-	cout << sizeof(str1) << endl;
-	cout << sizeof(str2) << endl;
-	cout << sizeof(str3) << endl;
-	
+	//cout << sizeof(str1) << endl;
+	//cout << sizeof(str2) << endl;
+	//cout << sizeof(str3) << endl;
+	//
+
+	string s1("hello world");
+	cout << s1.length() << endl;
+	cout << s1.size() << endl;
+	cout << s1.capacity() << endl;
+	cout << sizeof(s1) << endl;
+	s1.insert(0, 0, 'c');
+	cout << s1 << endl;
 	return 0;
 }

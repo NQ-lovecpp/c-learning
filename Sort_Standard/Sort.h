@@ -4,11 +4,12 @@
 #include<stdbool.h>
 #include<string.h>
 
+
 void InsertSort(int* arr, int size);           //≤Â»Î≈≈–Ú
 void InsertSort2(int* arr, int size);          //∂˛∑÷∑®≤Â»Î≈≈–Ú
 void ShellSort(int* arr, int size);			   //œ£∂˚≈≈–Ú
 
-void BubbleSort(int* a, int n);				   //√∞≈›≈≈–Ú
+void BubbleSort(int* arr, int size);		   //√∞≈›≈≈–Ú
 void SelectSort(int* a, int n);				   //—°‘Ò≈≈–Ú
 
 void HeapSort(int* a, int n);                  //∂—≈≈–Ú

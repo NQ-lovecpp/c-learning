@@ -1,6 +1,7 @@
 #include "Sort.h"
 #include "Stack.h"
 
+
 void Swap(int* p1, int* p2)
 {
 	int tmp = *p1;
@@ -125,18 +126,18 @@ void ShellSort(int* arr, int size)
 	}
 }
 
-void BubbleSort(int* a, int n)
+void BubbleSort(int* arr, int size)
 {
-	for (int j = 0; j < n; ++j)
+	for (int j = 0; j < size; ++j)
 	{
 		bool exchange = false;
-		for (int i = 1; i < n - j; i++)
+		for (int i = 1; i < size - j; i++)
 		{
-			if (a[i - 1] > a[i])
+			if (arr[i - 1] > arr[i])
 			{
-				int tmp = a[i];
-				a[i] = a[i - 1];
-				a[i - 1] = tmp;
+				int tmp = arr[i];
+				arr[i] = arr[i - 1];
+				arr[i - 1] = tmp;
 
 				exchange = true;
 			}
@@ -149,33 +150,33 @@ void BubbleSort(int* a, int n)
 	}
 }
 
-void SelectSort(int* a, int n)
+void SelectSort(int* arr, int size)
 {
-	int begin = 0, end = n - 1;
+	int begin = 0, end = size - 1;
 	while (begin < end)
 	{
 		int maxi = begin, mini = begin;
 		for (int i = begin; i <= end; i++)
 		{
-			if (a[i] > a[maxi])
+			if (arr[i] > arr[maxi])
 			{
 				maxi = i;
 			}
 
-			if (a[i] < a[mini])
+			if (arr[i] < arr[mini])
 			{
 				mini = i;
 			}
 		}
 
-		Swap(&a[begin], &a[mini]);
+		Swap(&arr[begin], &arr[mini]);
 		// 如果maxi和begin重叠，修正一下即可
 		if (begin == maxi)
 		{
 			maxi = mini;
 		}
 
-		Swap(&a[end], &a[maxi]);
+		Swap(&arr[end], &arr[maxi]);
 
 		++begin;
 		--end;
