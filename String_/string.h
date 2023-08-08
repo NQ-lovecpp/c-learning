@@ -44,7 +44,64 @@ namespace bit
 			_str = new char[_capacity + 1];
 			strcpy(_str, str);
 		}
-		
+
+		//string(const string& s)
+		//{
+		//	_str = new char[s._size];
+		//}
+
+		void swap(string& s)
+		{
+			std::swap(_str, s._str);
+			std::swap(_size, s._size);
+			std::swap(_capacity, s._capacity);
+		}
+
+		string(const string& s)
+			:_str(nullptr)
+			, _size(0)
+			, _capacity(0)
+		{
+			string tmp(s._str);
+			swap(tmp);
+		}
+
+		////陈旧的写法
+		//string& operator=(const string& s)
+		//{
+		//	if (this != &s)
+		//	{
+		//		char* tmp = new char[s._capacity + 1];
+		//		strcpy(tmp, s._str);
+
+		//		delete[] _str;
+		//		_str = tmp;
+		//		_size = s._size;
+		//		_capacity = s._capacity;
+		//	}
+		//	return *this;
+		//}
+
+		////现代写法
+		//string& operator=(const string& s)
+		//{
+
+		//	if (this != &s)
+		//	{
+		//		string tmp(s);
+		//		this->swap(tmp);
+		//	}
+		//	return *this;
+		//}
+
+
+		//极致写法
+		string& operator=(string tmp)
+		{
+			swap(tmp);
+			return *this;
+		}
+
 		~string()
 		{
 			delete[] _str;
@@ -83,13 +140,74 @@ namespace bit
 		{
 			if (n > _capacity)
 			{
-				char* tmp = new char[n+1];
+				char* tmp = new char[n+1];//多出来的一个空间是留给'\0'的
 				strcpy(tmp, _str);
 				delete[] _str;
 				_str = tmp;
 
 				_capacity = n;
 			}
+		}
+
+		void resize(size_t n, char ch = '\0')
+		{
+			if (n <= _size)
+			{
+				_str[n] = '\0';
+				_size = n;
+			}
+			else
+			{
+				reserve(n);
+				while (_size < n)
+				{
+					_str[_size] = ch;
+					++_size;
+				}
+
+				_str[_size] = '\0';
+			}
+		}
+
+		size_t find(char ch, size_t pos = 0)
+		{
+			for (size_t i = pos;i < _size;i++)
+			{
+				if (_str[i] == ch)
+				{
+					return i;
+				}
+			}
+			return npos;
+		}
+
+		size_t find(const char* sub, size_t pos = 0)
+		{
+			const char* p = strstr(_str, sub);
+			if (p)
+			{
+				return p - _str;
+			}
+			else
+			{
+				return npos;
+			}
+		}
+
+		string substr(size_t pos, size_t len = npos)
+		{
+			string s;
+			size_t end = pos + len;
+			if (len == npos || pos + len >= _size)//有多少取多少
+			{
+				len = _size - len;
+			}
+			s.reserve(len);
+			for (size_t i = pos;i < _size;i++)
+			{
+				s += _str[i];
+			}
+			return s;
 		}
 
 		void push_back(char ch)
@@ -128,29 +246,61 @@ namespace bit
 			return *this;
 		}
 
-		void insert(size_t pos, char ch)
+		void insert(size_t pos, char c)
 		{
 			assert(pos <= _size);
-			if (_size == _capacity)
+			if (_size >= _capacity)
 			{
 				reserve(_capacity == 0 ? 4 : _capacity * 2);
 			}
 
-			size_t end = _size;
-			while (end >= pos)
+			size_t end = _size + 1;
+			while (end > pos)
 			{
 				_str[end] = _str[end - 1];
-				end--;
+				--end;
 			}
 
-			_str[pos] = ch;
-			end--;
+			_str[pos] = c;
+			_size++;
 		}
+
 		void insert(size_t pos, const char* str)
-		{}
+		{
+			assert(pos <= _size);
+			size_t len = strlen(str);
+			if (_size + len > _capacity)
+			{
+				reserve(_size+len);
+			}
+			//移动数据
+			for (size_t i = _size;i >= pos;i--)
+			{
+				_str[len + i] = _str[i];
+			}
+			//插入字符串str
+			while (*str != '\0')
+			{
+				_str[pos++] = *(str++);
+			}
+			
+			_size += len;
+		}
 
 		void erase(size_t pos, size_t len = npos)
-		{}
+		{
+			assert(pos < _size);
+			if (pos==npos || pos + len >= _size)//pos位置之后全为0
+			{
+				_str[pos] = '\0';
+				_size = pos;
+			}
+			else
+			{
+				strcpy(_str + pos, _str + pos + len);
+				_size -= len;
+			}
+		}
 
 		bool operator==(const string& s) const
 		{
@@ -243,4 +393,36 @@ namespace bit
 		s1.insert(1, 'x');
 		cout << s1 << endl;
 	}
+
+	void test_string2()
+	{
+		string s1 = "world";
+		cout << s1.capacity() << endl;
+		cout << s1.size() << endl;
+		s1.insert(0, "hello ");
+		cout << s1 << endl;
+		cout << s1.capacity() << endl;
+		cout << s1.size() << endl;
+	}
+
+	void test_string3()
+	{
+		string s1 = "helloworld";
+		s1.erase(5, 10);
+		cout << s1 << endl;
+		s1.erase(2);
+		cout << s1 << endl;
+		s1.resize(50);
+		cout << s1 << endl;
+
+	}
+
+	//void test_string4()
+	//{
+	//	string s1("hello world");
+	//	cin>>
+	//}
+
+
+
 }

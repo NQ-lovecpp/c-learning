@@ -225,26 +225,26 @@ void HeapSort(int* a, int n)
 }
 
 //Hoare
-int PartSort(int* a, int left, int right)
+int PartSort(int* arr, int left, int right)
 {
 	int keyi = left;
 	while (left < right)
 	{
 		// ÓÒ±ßÕÒÐ¡
-		while (left < right && a[right] >= a[keyi])
+		while (left < right && arr[right] >= arr[keyi])
 		{
 			--right;
 		}
 		// ×ó±ßÕÒ´ó
-		while (left < right && a[left] <= a[keyi])
+		while (left < right && arr[left] <= arr[keyi])
 		{
 			++left;
 		}
 
-		Swap(&a[left], &a[right]);
+		Swap(&arr[left], &arr[right]);
 	}
 	
-	Swap(&a[keyi], &a[left]);
+	Swap(&arr[keyi], &arr[left]);
 	return left;
 }
 
@@ -299,16 +299,16 @@ int PartSort3(int* arr, int left, int right)
 	return prev;
 }
 
-void QuickSort(int* a, int begin, int end)
+void QuickSort(int* arr, int begin, int end)
 {
 	if (begin >= end)
 	{
 		return;
 	}
-	int keyi = PartSort3(a, begin, end);
+	int keyi = PartSort3(arr, begin, end);
 
-	QuickSort(a, begin, keyi - 1);
-	QuickSort(a, keyi + 1, end);
+	QuickSort(arr, begin, keyi - 1);
+	QuickSort(arr, keyi + 1, end);
 }
 
 void QuickSortNonR(int* a, int begin, int end)
