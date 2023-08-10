@@ -8,6 +8,7 @@ namespace bit
 		typedef char* iterator;
 		typedef const char* const_iterator;
 
+		// 迭代器
 		iterator begin()
 		{
 			return _str;
@@ -18,7 +19,7 @@ namespace bit
 			return _str + _size;
 		}
 
-		//只读迭代器
+		// 只读迭代器
 		const_iterator begin() const
 		{
 			return _str;
@@ -29,14 +30,9 @@ namespace bit
 			return _str+_size;
 		}
 
-		//string()
-		//	:_str(new char[1])
-		//	, _size(0)
-		//	,_capacity(0)
-		//{
-		//	_str[0] = '\0';
-		//}
-
+		// 构造函数
+		//String(const char* str = "\0") 错误示范
+		//String(const char* str = nullptr) 错误示范
 		string(const char* str="")
 			:_size(strlen(str))
 			,_capacity(_size)
@@ -57,13 +53,14 @@ namespace bit
 			std::swap(_capacity, s._capacity);
 		}
 
+		// 拷贝构造函数 深拷贝
 		string(const string& s)
 			:_str(nullptr)
 			, _size(0)
 			, _capacity(0)
 		{
-			string tmp(s._str);
-			swap(tmp);
+			string tmp(s._str);//调用了构造函数来深拷贝
+			this->swap(tmp);
 		}
 
 		////陈旧的写法
@@ -94,8 +91,7 @@ namespace bit
 		//	return *this;
 		//}
 
-
-		//极致写法
+		//赋值运算符重载 极致写法
 		string& operator=(string tmp)
 		{
 			swap(tmp);
@@ -416,13 +412,5 @@ namespace bit
 		cout << s1 << endl;
 
 	}
-
-	//void test_string4()
-	//{
-	//	string s1("hello world");
-	//	cin>>
-	//}
-
-
 
 }
