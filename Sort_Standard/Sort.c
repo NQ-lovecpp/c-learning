@@ -66,53 +66,25 @@ void InsertSort2(int* arr, int size)
 	}
 }
 
-//void ShellSort(int* arr, int size)
-//{
-//	// 1、gap > 1 预排序
-//	// 2、gap == 1 直接插入排序
-//
-//	int gap = size;
-//	while (gap > 1)
-//	{
-//		gap = gap / 3 + 1;  //调整希尔增量
-//		// gap = gap / 2;
-//		for (int i = 0; i < size - gap; ++i)
-//		{
-//			int end = i;
-//			int tmp = arr[end + gap];
-//			while (end >= 0)
-//			{
-//				if (arr[end] > tmp)
-//				{
-//					arr[end + gap] = arr[end];
-//					end -= gap;
-//				}
-//				else
-//				{
-//					break;
-//				}
-//			}
-//
-//			arr[end + gap] = tmp;
-//		}
-//	}
-//}
-
 void ShellSort(int* arr, int size)
 {
+	// 1、gap > 1 预排序
+	// 2、gap == 1 直接插入排序
+
 	int gap = size;
 	while (gap > 1)
 	{
 		gap = gap / 3 + 1;  //调整希尔增量
-		for (int i = 0; i < size; i++)
+		// gap = gap / 2;
+		for (int i = 0; i < size - gap; ++i)
 		{
 			int end = i;
-			int tmp = arr[end];
+			int tmp = arr[end + gap];
 			while (end >= 0)
 			{
-				if (arr[end-gap] > tmp)
+				if (arr[end] > tmp)
 				{
-					arr[end] = arr[end-gap];
+					arr[end + gap] = arr[end];
 					end -= gap;
 				}
 				else
@@ -121,10 +93,38 @@ void ShellSort(int* arr, int size)
 				}
 			}
 
-			arr[end] = tmp;
+			arr[end + gap] = tmp;
 		}
 	}
 }
+
+//void ShellSort(int* arr, int size)
+//{
+//	int gap = size;
+//	while (gap > 1)
+//	{
+//		gap = gap / 3 + 1;  //调整希尔增量
+//		for (int i = 0; i < size; i++)
+//		{
+//			int end = i;
+//			int tmp = arr[end];
+//			while (end >= 0)
+//			{
+//				if (arr[end-gap] > tmp)
+//				{
+//					arr[end] = arr[end-gap];
+//					end -= gap;
+//				}
+//				else
+//				{
+//					break;
+//				}
+//			}
+//
+//			arr[end] = tmp;
+//		}
+//	}
+//}
 
 void BubbleSort(int* arr, int size)
 {
@@ -183,20 +183,20 @@ void SelectSort(int* arr, int size)
 	}
 }
 
-void AdjustDown(int* a, int n,int parent)
+void AdjustDown(int* arr, int size, int parent)
 {
 	int child = parent * 2 + 1;
-	while (child < n)
+	while (child < size)
 	{
-		//find small child
-		if (child + 1 < n && a[child + 1] < a[child])
+		//find bigger child
+		if (child + 1 < size && arr[child + 1] > arr[child])
 		{
 			child++;
 		}
 
-		if (a[child] > a[parent])
+		if (arr[child] > arr[parent])
 		{
-			Swap(&a[child], &a[parent]);
+			Swap(&arr[child], &arr[parent]);
 			parent = child;
 			child = parent * 2 + 1;
 		}
@@ -208,19 +208,20 @@ void AdjustDown(int* a, int n,int parent)
 }
 
 //排升序 建大堆
-void HeapSort(int* a, int n)
+void HeapSort(int* arr, int size)
 {
 	//建堆
 	//向下调整建堆
-	for (int i = (n - 1 - 1) / 2;i >= 0;i--)
+	for (int i = (size - 1 - 1) / 2;i >= 0;i--)
 	{
-		AdjustDown(a, n, i);
+		AdjustDown(arr, size, i);
 	}
-	int end = n - 1;
+	int end = size - 1;
 	while (end > 0)
 	{
-		Swap(&a[0], &a[end]);
-		AdjustDown(a, end, 0);
+		Swap(&arr[0], &arr[end]);
+		AdjustDown(arr, end, 0);
+		end--;
 	}
 }
 
@@ -249,32 +250,32 @@ int PartSort(int* arr, int left, int right)
 }
 
 //挖坑法
-int PartSort2(int* a, int left, int right)
+int PartSort2(int* arr, int left, int right)
 {
-	int key = a[left];
+	int key = arr[left];
 	int hole = left;
 
 	while (left < right)
 	{
 		// 右边找小
-		while (left < right && a[right] >= key)
+		while (left < right && arr[right] >= key)
 		{
 			--right;
 		}
 
-		a[hole] = a[right];
+		arr[hole] = arr[right];
 		hole = right;
 		// 左边找大
-		while (left < right && a[left] <= key)
+		while (left < right && arr[left] <= key)
 		{
 			++left;
 		}
 
-		a[hole] = a[left];
+		arr[hole] = arr[left];
 		hole = left;
 	}
 
-	a[hole] = key;
+	arr[hole] = key;
 	return hole;
 }
 
@@ -311,7 +312,7 @@ void QuickSort(int* arr, int begin, int end)
 	QuickSort(arr, keyi + 1, end);
 }
 
-void QuickSortNonR(int* a, int begin, int end)
+void QuickSortNonR(int* arr, int begin, int end)
 {
 	ST st;
 	STInit(&st);
@@ -326,7 +327,7 @@ void QuickSortNonR(int* a, int begin, int end)
 		int right = STTop(&st);
 		STPop(&st);
 
-		int keyi = PartSort3(a, left, right);
+		int keyi = PartSort3(arr, left, right);
 
 		if (keyi + 1 < right)
 		{
@@ -343,7 +344,7 @@ void QuickSortNonR(int* a, int begin, int end)
 }
 
 //归并排序_递归法
-void _MergeSort(int* a, int begin,int end,int* tmp)
+void _MergeSort(int* arr, int begin,int end,int* tmp)
 {
 	if (begin == end)
 	{
@@ -353,43 +354,43 @@ void _MergeSort(int* a, int begin,int end,int* tmp)
 	//小区间优化
 	if (end - begin + 1 < 10)
 	{
-		InsertSort(a+begin, end - begin + 1);
+		InsertSort(arr + begin, end - begin + 1);
 		return;
 	}
 	int mid = (begin + end)/2;
-	_MergeSort(a, begin, mid, tmp);
-	_MergeSort(a, mid+1, end, tmp);
+	_MergeSort(arr, begin, mid, tmp);
+	_MergeSort(arr, mid+1, end, tmp);
 
 	int begin1 = begin, end1 = mid;
 	int begin2 = mid + 1, end2 = end;
 	int i = begin;
 	while (begin1 <= end1 && begin2 <= end2)
 	{
-		if (a[begin1] < a[begin2])
+		if (arr[begin1] < arr[begin2])
 		{
-			tmp[i++] = a[begin1++];
+			tmp[i++] = arr[begin1++];
 		}
 		else
 		{
-			tmp[i++] = a[begin2++];
+			tmp[i++] = arr[begin2++];
 		}
 	}
 
 	while (begin1<=end1)
 	{
-		tmp[i++] = a[begin1++];
+		tmp[i++] = arr[begin1++];
 	}
 	while (begin2 <= end2)
 	{
-		tmp[i++] = a[begin2++];
+		tmp[i++] = arr[begin2++];
 	}
-	memcpy((a+begin), tmp+begin,sizeof(int)*(end-begin+1));
+	memcpy((arr + begin), tmp + begin, sizeof(int) * (end - begin + 1));
 }
 
-void MergeSort(int* a, int n)
+void MergeSort(int* arr, int size)
 {
-	int* tmp = malloc(sizeof(int) * n);
-	_MergeSort(a, 0, n - 1,tmp);
+	int* tmp = malloc(sizeof(int) * size);
+	_MergeSort(arr, 0, size - 1,tmp);
 	free(tmp);
 }
 

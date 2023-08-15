@@ -2,59 +2,75 @@
 #include "Stack.h"
 #include <time.h>
 
-void PrintArray(int* a, int size)
+
+
+void PrintArray(int* arr, int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		printf("%d ", a[i]);
+		printf("%d ", arr[i]);
 	}
 	printf("\n");
 }
 
 void TestInsertSort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("InsertSort:\n");
-	int a[] = { 4,7,1,9,3,6,5,8,3,2,0 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	InsertSort(a, sizeof(a) / sizeof(int));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	InsertSort(UniArr, sizeof(UniArr) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
 }
 
 void TestInsertSort2()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("InsertSort2:\n");
-	int a[] = { 4,7,1,9,3,6,5,8,3,2,0 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	InsertSort2(a, sizeof(a) / sizeof(int));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	InsertSort2(UniArr, sizeof(UniArr) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
+}
+
+void TestShellSort()
+{
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
+	printf("ShellSort:\n");
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	ShellSort(UniArr, sizeof(UniArr) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
 }
 
 void TestBubbleSort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("BubbleSort:\n");
-	int a[] = { 4,7,1,9,3,6,5,8,3,2,0 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	BubbleSort(a, sizeof(a) / sizeof(int));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	BubbleSort(UniArr, sizeof(UniArr) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
 	printf("\n");
 }
 
 void TestSelectSort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("SelectSort:\n");
-	int a[] = { 9,7,1,3,3,0,5,8,3,2,3 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	SelectSort(a, sizeof(a) / sizeof(int));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	SelectSort(UniArr, sizeof(UniArr) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
 }
 
-void TestShellSort()
+void TestHeapSort()
 {
-	printf("ShellSort:\n");
-	int a[] = { 4,7,1,9,3,6,5,8,3,2,0 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	ShellSort(a, sizeof(a) / sizeof(int));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
+	printf("HeapSort:\n");
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	HeapSort(UniArr, sizeof(UniArr) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
 }
 
 int compar(int* p1, int* p2)
@@ -73,45 +89,64 @@ int compar(int* p1, int* p2)
 	}
 }
 
+// 标准库中的快速排序qsort
 void Testqsort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("qsort:\n");
-	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	//QuickSort(a, 0, (sizeof(a) / sizeof(int)) - 1);
-	qsort(a, sizeof(a) / sizeof(int), sizeof(int), compar);
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	qsort(UniArr, sizeof(UniArr) / sizeof(int), sizeof(int), compar);
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
 	printf("\n");
 }
 
 void TestQuickSort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("QuickSort:\n");
-	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	//QuickSort(a, 0, (sizeof(a) / sizeof(int)) - 1);
-	QuickSortNonR(a, 0, (sizeof(a) / sizeof(int)) - 1);
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	QuickSort(UniArr, 0, (sizeof(UniArr) / sizeof(int)) - 1);
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
+}
+
+void TestQuickSortNonR()
+{
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
+	printf("QuickSortNonR:\n");
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	QuickSortNonR(UniArr, 0, (sizeof(UniArr) / sizeof(int)) - 1);
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
 	printf("\n");
 }
 
 void TestMergeSort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("MergeSort:\n");
-	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	MergeSort(a, (sizeof(a) / sizeof(int)));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	MergeSort(UniArr, (sizeof(UniArr) / sizeof(int)));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	printf("\n");
+}
+
+void TestMergeSortNonR()
+{
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
+	printf("MergeSortNonR:\n");
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	MergeSortNonR(UniArr, (sizeof(UniArr) / sizeof(int)));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
 	printf("\n");
 }
 
 void TestCountSort()
 {
+	int UniArr[10] = { 4,7,1,9,3,6,5,8,3,2 };
 	printf("CountSort:\n");
-	int a[] = { 6,1,2,7,9,3,4,5,10,8 };
-	PrintArray(a, sizeof(a) / sizeof(int));
-	CountSort(a, (sizeof(a) / sizeof(int)));
-	PrintArray(a, sizeof(a) / sizeof(int));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
+	CountSort(UniArr, (sizeof(UniArr) / sizeof(int)));
+	PrintArray(UniArr, sizeof(UniArr) / sizeof(int));
 	printf("\n");
 }
 
@@ -172,17 +207,26 @@ void TestOP()
 
 int main()
 {
-	//TestInsertSort();
-	//TestInsertSort2();
-	//TestShellSort();
+	TestInsertSort();
+	TestInsertSort2();
+	TestShellSort();
 
 	TestBubbleSort();
 	TestSelectSort();
+	TestHeapSort();
+	
+	TestQuickSort();
+	TestQuickSortNonR();
 
-	//TestQuickSort();
-	//TestCountSort();
+	TestMergeSort();
+	TestMergeSortNonR();
+
+	TestCountSort();
 
 	//TestOP();
 
 	return 0;
 }
+
+
+
