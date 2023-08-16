@@ -12,7 +12,6 @@ using namespace std;
 
 int main()
 {
-
 	string s1 = "hello worldxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 	string s2(s1);
 	cout << sizeof(s1) << endl;
