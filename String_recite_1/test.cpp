@@ -6,6 +6,6 @@ using namespace std;
 
 int main()
 {
-	chen::test_string1();
+	chen::test_string101();
 	return 0;
 }

@@ -178,27 +178,102 @@ namespace chen
         {
             return *(_str + index);
         }
-        const char& operator[](size_t index)const;
+        const char& operator[](size_t index) const
+        {
+            return *(_str + index);
+        }
 
         // 关系运算符重载
-        bool operator<(const string& s);
-        bool operator<=(const string& s);
-        bool operator>(const string& s);
-        bool operator>=(const string& s);
-        bool operator==(const string& s);
-        bool operator!=(const string& s);
+        bool operator<(const string& s) const
+        {
+            return strcmp(_str, s._str) < 0;
+        }
+
+        bool operator==(const string& s) const
+        {
+            return strcmp(_str, s._str) == 0;
+        }
+
+        bool operator<=(const string& s) const
+        {
+            return *this < s || *this == s;
+        }
+
+        bool operator>(const string& s) const
+        {
+            return !(*this <= s);
+        }
+
+        bool operator>=(const string& s) const
+        {
+            return !(*this < s);
+        }
+
+        bool operator!=(const string& s) const
+        {
+            return !(*this == s);
+        }
 
 
 
         // 返回c在string中第一次出现的位置
-        size_t find(char c, size_t pos = 0) const;
+        size_t find(char c, size_t pos = 0) const
+        {
+            return strchr(_str + pos, c) - _str;
+        }
 
         // 返回子串s在string中第一次出现的位置
-        size_t find(const char* s, size_t pos = 0) const;
+        size_t find(const char* s, size_t pos = 0) const
+        {
+            char* p = strstr(_str + pos, s);
+            if (p)
+            {
+                return p - _str;
+            }
+            else
+            {
+                return npos;
+            }
+        }
 
         // 在pos位置上插入字符c/字符串str，并返回该字符的位置
-        string& insert(size_t pos, char c);
-        string& insert(size_t pos, const char* str);
+        string& insert(size_t pos, char c)
+        {
+            assert(pos <= _size);
+            if (_size == _capacity)
+            {
+                reserve(_capacity == 0 ? 4 : _capacity + 4);
+            }
+            
+            size_t end = _size + 1;
+            while (end > pos)
+            {
+                _str[end] = _str[end - 1];
+                end--;
+            }
+            _str[pos] = c;
+            _size++;
+            return *this;
+        }
+        string& insert(size_t pos, const char* str)
+        {
+            assert(pos <= _size);
+            size_t len = strlen(str);
+            if (_size + len > _capacity)
+            {
+                reserve(_size + len);
+            }
+
+            size_t end = _size + len;
+            while (end >= pos + len)
+            {
+                _str[end] = _str[end - len];
+                end--;
+            }
+            memcpy(_str + pos, str, len);
+            _size += len;
+            return *this;
+        }
 
         // 删除pos位置上的元素，并返回该元素的下一个位置
         string& erase(size_t pos, size_t len);
@@ -207,6 +282,8 @@ namespace chen
         char* _str;
         size_t _size;
         size_t _capacity;
+
+        const static size_t npos = -1;
     };
 
     ostream& operator<<(ostream& _cout, const string& s)
@@ -219,10 +296,38 @@ namespace chen
         return _cout;
     }
 
-    istream& operator>>(istream& _cin, string& s);
+    istream& operator>>(istream& _cin, string& s)
+    {
+        s.clear();
+
+        char buff[129];
+        size_t i = 0;
+
+        char ch = _cin.get();
+        while (ch != ' ' && ch != '\n')
+        {
+            buff[i++] = ch;
+            if (i == 128)
+            {
+                buff[i] = '\0';
+                s += buff;
+                i = 0;
+            }
+
+            ch = _cin.get();
+        }
+
+        if (i != 0)
+        {
+            buff[i] = '\0';
+            s += buff;
+        }
+
+        return _cin;
+    }
 
 
-    void test_string1()
+    void test_string100()
     {
         string s1("12345");
         s1.push_back('a');
@@ -237,5 +342,11 @@ namespace chen
         cout << s1 << endl;
     }
 
-    
+    void test_string101()
+    {
+        string s("123456789");
+        cout << s.find("123") << endl;
+        s.insert(3, "@@%%%%%%%%%%%%%%%%%%");
+        cout << s << endl;
+    }
 }
