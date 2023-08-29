@@ -25,6 +25,58 @@ namespace chen
 			return _finish + 1;
 		}
 
+		// construct and destroy
+
+		vector()
+		{}
+
+		vector(size_t n, const T& value = T())
+		{
+			reserve(n);
+			for (size_t i = 0;i < n;i++)
+			{
+				push_back(value);
+			}
+		}
+
+		template<class InputIterator>
+		vector(InputIterator first, InputIterator last);
+		{
+			while (first != lase)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
+		vector(const vector<T>& v)
+		{
+			reserve(v.capacity());
+			for (auto& e : v)
+			{
+				push_back(e);
+			}
+		}
+
+		void swap(vector<T>& v)
+		{
+			std::swap(_start, v._start);
+			std::swap(_finish, v._finish);
+			std::swap(_endofstorage, v._endofstorage);
+		}
+
+		vector<T>& operator= (vector<T> v)
+		{
+			swap(tmp);
+			return *this;
+		}
+
+		~vector()
+		{
+			delete[] _start;
+			_start = _finish_ = _endOfStorage = nullptr;
+		}
+
 		// capacity
 		size_t size()
 		{
@@ -65,7 +117,7 @@ namespace chen
 				{
 					*_finish = value;
 					// 调用赋值运算符重载，因为_finish所指向的对象是new出来的，
-					//new已经调用了构造函数，可以说finish所指向的对象已经被定义，
+					//new已经调用了构造函数，可以说finish所指向的对象已经完成初始化，
 					//对于已经定义的对象，当然=号调用的是赋值运算符重载
 					++_finish;
 				}
@@ -73,19 +125,66 @@ namespace chen
 		}
 
 		// access
-		T& operator[](size_t pos);
-		const T& operator[](size_t pos)const;
+		T& operator[](size_t pos)
+		{
+			assert(pos < size());
+
+			return _start[pos];
+		}
+
+		const T& operator[](size_t pos)const
+		{
+			assert(pos < size());
+
+			return _start[pos];
+		}
 
 		// modify
-		void push_back(const T& x);
+		void push_back(const T& x)
+		{
+			insert(end(), x);
+		}
 
-		void pop_back();
 
-		void swap(vector<T>& v);
+		iterator insert(iterator pos, const T& x)
+		{
+			assert(pos >= _start);
+			assert(pos <= _finish);
 
-		iterator insert(iterator pos, const T& x);
+			if (_finish == _endOfStorage)
+			{
+				size_t len = pos - _start;
+				reserve(capacity() == 0 ? 4 : capacity() * 2);
+				pos = _start + len;
+			}
 
-		iterator erase(Iterator pos);
+			iterator end = _finish - 1;
+			while (end >= pos)
+			{
+				*(end + 1) = *end;
+				--end;
+			}
+
+			*pos = x;
+			++_finish;
+		}
+
+		iterator erase(Iterator pos)
+		{
+			assert(pos >= _start);
+			assert(pos < _finish);
+
+			iterator it = pos + 1;
+			while (it < _finish)
+			{
+				*(it - 1) = *it;
+				++it;
+			}
+
+			--_finish;
+
+			return pos;
+		}
 
 	private:
 		iterator _start;  // 指向数据块的开始
