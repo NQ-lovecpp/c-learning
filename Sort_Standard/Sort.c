@@ -376,7 +376,7 @@ void _MergeSort(int* arr, int begin,int end,int* tmp)
 		}
 	}
 
-	while (begin1<=end1)
+	while (begin1 <= end1)
 	{
 		tmp[i++] = arr[begin1++];
 	}

@@ -4,6 +4,16 @@
 
 namespace bit
 {
+	// 适配器 -- 复用
+	template<class Iterator, class Ref, class Ptr>
+	struct Reverse_iterator
+	{
+		Iterator _it;
+	};
+	// vector和list反向迭代器实现
+}
+namespace bit
+{
 	template<class T>
 	struct list_node
 	{
