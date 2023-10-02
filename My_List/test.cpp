@@ -18,7 +18,8 @@ void print_container(const Container& con)
 
 int main()
 {
-	list<string> lt;
+	typedef int test1;
+	bit::list<string> lt;
 	lt.push_back("hello world1");
 	lt.push_back("hello world2");
 	lt.push_back("hello world3");
