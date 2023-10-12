@@ -1,3 +1,7 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <list>
 //void menu()
 //{
 //	printf("********************************\n");
@@ -8,67 +12,47 @@
 //	printf("********************************\n");
 //}
 
-namespace chen
+struct ContactNode
 {
-	struct ContactNodeData
-	{
-		std::string name;
-		int age;
-		std::string sex;
-		std::string tele;
-	};
-	class Contact
-	{
-		//初始化通讯录 构造函数
-		Contact()
-		{}
+	std::string name;
+	int age;
+	std::string sex;
+	std::string tele;
+};
 
-		//销毁通讯
-		~Contact()
-		{}
+class Contact
+{
+public:
 
-		//增加指定联系人
-		void AddContact()
-		{
-			ContactNodeData d;
+	//初始化通讯录 构造函数
+	Contact();
 
-			cout << "请输入姓名:" << endl;
-			cin >> d.name;
-			cout << "请输入年龄:" << endl;
-			cin >> d.age;
-			cout << "请输入性别:" << endl;
-			cin >> d.sex;
-			cout << "请输入电话:" << endl;
-			cin >> d.tele;
+	//销毁通讯
+	~Contact();
 
-			con.push_back(d);
-		}
+	//增加指定联系人
+	void AddContact();
 
-		//显示联系人信息
-		void ShowContact()
-		{
-			int i = 1;
-			for (auto e : con)
-			{
+	//显示联系人信息
+	void ShowContact();
 
-			}
-		}
+	//找到删除位置
+	std::list<ContactNode>::iterator FindByName(std::list<ContactNode>::iterator begin,
+							std::list<ContactNode>::iterator end, std::string name);
+	//删除指定联系人
+	void DelContact();
 
-		//删除指定联系人
-		void DelContact();
+	//查找指定联系人
+	void SearchContact();
 
-		//查找指定联系人
-		void SearchContact();
+	//修改通讯录
+	void ModifyContact();
 
-		//修改通讯录
-		void ModifyContact();
+	////排序通讯录元素
+	//void SortContact();
 
-		//排序通讯录元素
-		void SortContact();
-
-		//保存数据到文件
-		void SaveContact();
-	private:
-		std::list<ContactNodeData> con;
-	};
-}
+	////保存数据到文件
+	//void SaveContact();
+private:
+	std::list<ContactNode> con;
+};
