@@ -1,4 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <string.h>
 using namespace std;
 
 
@@ -8,7 +10,7 @@ public:
 	// 打印日期
 	void Print() const;
 
-	void operator<<(ostream& out);
+	//friend void operator<<(ostream& out);
 
 	// 获取某年某月的天数
 	int GetMonthDay(int year, int month);
@@ -17,7 +19,7 @@ public:
 	int GetYearDay(int year);
 
 	// 全缺省的构造函数
-	Date(int year = 1900, int month = 1, int day = 1);
+	Date(int year, int month, int day, const char* name);
 
 	// 拷贝构造函数
 	Date(const Date& d);
@@ -78,4 +80,5 @@ private:
 	int _year;
 	int _month;
 	int _day;
+	char* _name;
 };

@@ -1,5 +1,6 @@
 #include "Date.h"
 
+
 // 打印日期
 void Date::Print() const
 {
@@ -44,11 +45,17 @@ int Date::GetYearDay(int year)
 }
 
 // 全缺省的构造函数
-Date::Date(int year, int month, int day)
+Date::Date(int year, int month, int day, const char* name)
 {
 	_year = year;
 	_month = month;
 	_day = day;
+	int len = strlen(name);
+	_name = new char[len + 1];
+	if (_name != nullptr)
+	{
+		strcpy(_name, name);
+	}
 }
 
 // 拷贝构造函数
@@ -58,6 +65,12 @@ Date::Date(const Date& d)
 	_year = d._year;
 	_month = d._month;
 	_day = d._day;
+	int len = strlen(d._name);
+	_name = new char[len + 1];
+	if (_name != nullptr)
+	{
+		strcpy(_name, d._name);
+	}
 }
 
 // 赋值运算符重载
@@ -74,6 +87,8 @@ Date& Date::operator=(const Date& d)
 Date::~Date()
 {
 	_year = _month = _day = 0;
+	delete _name;
+	_name = nullptr;
 }
 
 // 日期+=天数
