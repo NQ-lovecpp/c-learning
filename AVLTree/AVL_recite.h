@@ -91,7 +91,7 @@ namespace Recite
 				else if (parent->_bf == 1 || parent->_bf == -1)
 				{
 					cur = parent;
-					parent = parent->parent;
+					parent = parent->_parent;
 				}
 				else if (parent->_bf == 2 || parent->_bf == -2)
 				{

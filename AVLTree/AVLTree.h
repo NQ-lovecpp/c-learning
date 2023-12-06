@@ -1,4 +1,10 @@
 #pragma once
+#include <utility>
+#include <cassert>
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::pair;
 
 template<class K,class V>
 struct AVLTreeNode
@@ -91,18 +97,22 @@ public:
 			{
 				if (parent->_bf == 2 && cur->_bf == 1)
 				{
+					cout << "RotateL" << endl;
 					RotateL(parent);
 				}
 				else if (parent->_bf == -2 && cur->_bf == -1)
 				{
+					cout << "RotateR" << endl;
 					RotateR(parent);
 				}
 				else if (parent->_bf == 2 && cur->_bf == -1)
 				{
+					cout << "RotateRL" << endl;
 					RotateRL(parent);
 				}
 				else if (parent->_bf == -2 && cur->_bf == 1)
 				{
+					cout << "RotateLR" << endl;
 					RotateLR(parent);
 				}
 
@@ -228,8 +238,40 @@ public:
 
 	void RotateLR(Node* parent)
 	{
+		Node* subL = parent->_left;
+		Node* subLR = subL->_right;
+		int bf = subLR->_bf;
+
+		// 先对左子树进行左旋
 		RotateL(parent->_left);
+
+		// 再对父节点进行右旋
 		RotateR(parent);
+
+		// 调整平衡因子
+		if (bf == 0)
+		{
+			// subLR自己就是新增
+			parent->_bf = subL->_bf = subLR->_bf = 0;
+		}
+		else if (bf == -1)
+		{
+			// subLR的左子树新增
+			parent->_bf = 0;
+			subL->_bf = 1;
+			subLR->_bf = 0;
+		}
+		else if (bf == 1)
+		{
+			// subLR的右子树新增
+			parent->_bf = -1;
+			subL->_bf = 0;
+			subLR->_bf = 0;
+		}
+		else
+		{
+			assert(false);
+		}
 	}
 
 	void InOrder()

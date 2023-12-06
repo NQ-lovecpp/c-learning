@@ -120,8 +120,7 @@
 
 #include <iostream>
 #include <string>
-#include "AVL_recite.h"
-using namespace Recite;
+#include "AVLTree.h"
 using std::string;
 using std::cin;
 using std::cout;
@@ -132,13 +131,21 @@ int main()
 	AVLTree<int, string> dict;
 
 	dict.Insert(std::make_pair(5, "hello"));
-	dict.Insert(std::make_pair(1, "hello"));
 	dict.Insert(std::make_pair(6, "hello"));
-	dict.Insert(std::make_pair(3, "hello"));
+	dict.Insert(std::make_pair(1, "hello"));
 	dict.Insert(std::make_pair(2, "hello"));
-	dict.Insert(std::make_pair(8, "hello"));
+	dict.Insert(std::make_pair(20, "hello"));
+	dict.Insert(std::make_pair(3, "hello"));
 	dict.Insert(std::make_pair(7, "hello"));
+	dict.Insert(std::make_pair(-2, "hello"));
+	dict.Insert(std::make_pair(0, "hello"));
+	dict.Insert(std::make_pair(9, "hello"));
+	dict.Insert(std::make_pair(-10, "hello"));
+	dict.Insert(std::make_pair(4, "hello"));
 
-	dict.Inorder();
+	dict.Insert(std::make_pair(22, "hello"));
+	dict.Insert(std::make_pair(-7, "hello"));
+
+	dict.InOrder();
 	return 0;
 }
