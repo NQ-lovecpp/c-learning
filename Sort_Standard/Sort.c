@@ -225,7 +225,7 @@ void HeapSort(int* arr, int size)
 	}
 }
 
-//Hoare
+//Hoare 法
 int PartSort(int* arr, int left, int right)
 {
 	int keyi = left;
@@ -300,6 +300,7 @@ int PartSort3(int* arr, int left, int right)
 	return prev;
 }
 
+//快速排序_递归
 void QuickSort(int* arr, int begin, int end)
 {
 	if (begin >= end)
@@ -312,6 +313,7 @@ void QuickSort(int* arr, int begin, int end)
 	QuickSort(arr, keyi + 1, end);
 }
 
+//快速排序_非递归
 void QuickSortNonR(int* arr, int begin, int end)
 {
 	ST st;

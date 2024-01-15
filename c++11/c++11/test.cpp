@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include <algorithm>
+#include <functional>
 using namespace std;
 
 class Date
@@ -484,30 +485,79 @@ namespace bit
 //	return 0;
 //}
 
-int main()
-{
-	// 最简单的lambda表达式, 该lambda表达式没有任何意义
-	auto lambda1 = [] {};
+//int main()
+//{
+//	// 最简单的lambda表达式, 该lambda表达式没有任何意义
+//	auto lambda1 = [] {};
+//
+//	cout << typeid(lambda1).name() << endl;
+//
+//	// 省略参数列表和返回值类型，返回值类型由编译器推导为int
+//	int a = 3, b = 4;
+//	[=] {return a + 3; };
+//
+//	// 省略了返回值类型，无返回值类型
+//	auto fun1 = [&](int c) {b = a + c; };
+//	fun1(10);
+//	cout << a << " " << b << endl;
+//
+//	// 各部分都很完善的lambda函数
+//	auto fun2 = [=, &b](int c)->int {return b += a + c; };
+//	cout << fun2(10) << endl;
+//
+//	// 复制捕捉x
+//	int x = 10;
+//	auto add_x = [x](int a) mutable { x *= 2; return a + x; };
+//	cout << add_x(10) << endl;
+//
+//	return 0;
+//}
 
-	cout << typeid(lambda1).name() << endl;
 
-	// 省略参数列表和返回值类型，返回值类型由编译器推导为int
-	int a = 3, b = 4;
-	[=] {return a + 3; };
 
-	// 省略了返回值类型，无返回值类型
-	auto fun1 = [&](int c) {b = a + c; };
-	fun1(10);
-	cout << a << " " << b << endl;
+//std::function<int(int, int)> createLambda() {
+//	int capturedValue = 10;
+//
+//	// 返回一个 lambda 表达式，其中捕获了局部变量 capturedValue
+//	return [capturedValue](int x, int y) {
+//		return x + y + capturedValue;
+//	};
+//}
+//
+//int main() {
+//	// 获取包装了 lambda 表达式的 std::function
+//	std::function<int(int, int)> func = createLambda();
+//
+//	// 此时 createLambda 中的局部变量 capturedValue 已经超出作用域
+//	// 访问 capturedValue 将导致未定义行为
+//	// 由于 std::function 存储了 lambda 表达式的副本，因此此时 func 也无效
+//	// 尝试调用 func 将导致未定义行为
+//	std::cout << func(2, 3) << std::endl;
+//
+//	return 0;
+//}
 
-	// 各部分都很完善的lambda函数
-	auto fun2 = [=, &b](int c)->int {return b += a + c; };
-	cout << fun2(10) << endl;
 
-	// 复制捕捉x
-	int x = 10;
-	auto add_x = [x](int a) mutable { x *= 2; return a + x; };
-	cout << add_x(10) << endl;
+#include <iostream>
+#include <functional>
+
+std::function<int(int, int)> createLambda() {
+	int capturedValue = 10;
+
+	// 返回一个 lambda 表达式，其中捕获了局部变量 capturedValue
+	return [capturedValue](int x, int y) {
+		return x + y + capturedValue;
+	};
+}
+
+int main() {
+	// 获取包装了 lambda 表达式的 std::function
+	std::function<int(int, int)> func1 = createLambda();
+	std::function<int(int, int)> func2 = createLambda();
+
+	// 输出 func1 和 func2 的地址
+	std::cout << "Address of func1: " << &func1 << std::endl;
+	std::cout << "Address of func2: " << &func2 << std::endl;
 
 	return 0;
 }
