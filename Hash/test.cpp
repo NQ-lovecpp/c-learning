@@ -1,12 +1,6 @@
-#include <iostream>
-#include <cstdlib>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <unordered_map>
-#include <utility>
 
-using namespace std;
+
+
 
 
 
@@ -137,9 +131,13 @@ using namespace std;
 //	return 0;
 //}
 
-#include "My_unordered_set.h"
+#include <iostream>
+using namespace std;
+//#include "My_unordered_set.h"
+#include "HashTable.h"
 
 int main()
 {
-
+	
+	return 0;
 }
