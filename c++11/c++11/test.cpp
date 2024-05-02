@@ -9,6 +9,7 @@
 #include <list>
 #include <algorithm>
 #include <functional>
+#include <initializer_list>
 using namespace std;
 
 class Date
@@ -538,26 +539,658 @@ namespace bit
 //}
 
 
-#include <iostream>
-#include <functional>
+//#include <iostream>
+//#include <functional>
+//
+//std::function<int(int, int)> createLambda() {
+//	int capturedValue = 10;
+//
+//	// 返回一个 lambda 表达式，其中捕获了局部变量 capturedValue
+//	return [capturedValue](int x, int y) {
+//		return x + y + capturedValue;
+//	};
+//}
+//
+//int main() {
+//	// 获取包装了 lambda 表达式的 std::function
+//	std::function<int(int, int)> func1 = createLambda();
+//	std::function<int(int, int)> func2 = createLambda();
+//
+//	// 输出 func1 和 func2 的地址
+//	std::cout << "Address of func1: " << &func1 << std::endl;
+//	std::cout << "Address of func2: " << &func2 << std::endl;
+//
+//	return 0;
+//}
 
-std::function<int(int, int)> createLambda() {
-	int capturedValue = 10;
+//
+//int main()
+//{
+//	int C_arr[10] = { 1,2,3,4,5,6,7,8,9,0 };
+//	vector<int> vector_arr = { 1,2,3,4,5,6,7,8,9,0 };
+//	initializer_list<int> il = { 1,2,3,4,5,6,7,8,9,0 };
+//
+//	return 0;
+//}
 
-	// 返回一个 lambda 表达式，其中捕获了局部变量 capturedValue
-	return [capturedValue](int x, int y) {
-		return x + y + capturedValue;
+
+//struct Point
+//{
+//	int _x;
+//	int _y;
+//};
+//int main()
+//{
+//	//C++98
+//	// 变量
+//
+//	int a1 = 1;
+//	int a2 = { 2 };
+//	int a3{ 3 };
+//	int a4(4);
+//
+//	// 数组
+//	int array1[] = { 1, 2, 3, 4, 5 };
+//	int array2[5] = { 0 };
+//	Point p = { 1, 2 };
+//	return 0;
+//}
+
+//struct Point
+//{
+//	int _x;
+//	int _y;
+//};
+//int main()
+//{
+//	//C++11
+//	
+//	// 变量和数组
+//	int a3{ 3 };
+//	int a4(4);
+//	int array1[]{ 1, 2, 3, 4, 5 };
+//	int array2[5]{ 0 };
+//
+//	// 自定义类型
+//	Point p{ 1, 2 };
+//
+//	// C++11中列表初始化也可以适用于new表达式中
+//	int* pa = new int[4] { 0 };
+//
+//
+//	return 0;
+//}
+
+
+//class Date
+//{
+//public:
+//	Date(int year, int month, int day)
+//		:_year(year)
+//		, _month(month)
+//		, _day(day)
+//	{
+//		cout << "Date(int year, int month, int day)" << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//int main()
+//{
+//	Date d1(2022, 1, 1); // old style
+//	// C++11支持的列表初始化，这里会调用构造函数初始化
+//	Date d2{ 2022, 1, 2 };
+//	Date d3 = { 2022, 1, 3 };
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	auto il = { 10, 20, 30 };
+//	cout << typeid(il).name() << endl;
+//	return 0;
+//}
+
+//int main()
+//{
+//	vector<int> v = { 1,2,3,4 };
+//	list<int> lt = { 1,2 };
+//	// 这里{"sort", "排序"}会先初始化构造一个pair对象
+//	map<string, string> dict = { {"sort", "排序"}, {"insert", "插入"} };
+//	// 使用大括号对容器赋值
+//	v = { 10, 20, 30 };
+//	return 0;
+//}
+
+//int main()
+//{
+//	//int&& rr1 = 42;
+//	//int a = rr1;
+//	//int&& rr2 = std::move(rr1);
+//	//int b = rr1;
+//
+//	//int* pnum1 = new int(10);
+//	//delete (void*)nullptr;
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	// 以下的p、b、c、*p都是左值
+//	int* p = new int(0);
+//	int b = 1;
+//	const int c = 2;
+//
+//	// 以下几个是对上面左值的左值引用
+//	int*& rp = p;
+//	int& rb = b;
+//	const int& rc = c;
+//	int& pvalue = *p;
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	double x = 1.1, y = 2.2;
+//
+//	// 以下几个都是常见的右值
+//	10;
+//	x + y;
+//	fmin(x, y);
+//
+//	// 以下几个都是对右值的右值引用
+//	int&& rr1 = 10;
+//	double&& rr2 = x + y;
+//	double&& rr3 = fmin(x, y);
+//
+//	// 特例：可以将一个const左值引用绑定到一个右值上
+//	const int& cref = 10;
+//
+//	// 下面三个编译会报错：error C2106: “=”: 左操作数必须为左值
+//	10 = 1;
+//	x + y = 1;
+//	fmin(x, y) = 1;
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	constexpr int a = 1;
+//
+//
+//	constexpr const char* name = "chen";
+//	
+//
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	double x = 1.1, y = 2.2;
+//	int&& rr1 = 10;
+//	const double&& rr2 = x + y;
+//
+//	// rr1引用10后，可以对rr1取地址，也可以修改rr1。
+//
+//	cout << (void*)(&rr1) << endl;
+//	rr1 = 20;
+//	cout << (void*)(&rr1) << endl;
+//
+//
+//
+//
+//
+//	// rr2 = 5.5; // 报错
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	// 左值引用只能引用左值，不能引用右值。
+//	int a = 10;
+//	int& ra1 = a;  // 正确，ra为a的别名
+//	int& ra2 = 10; // 编译失败，因为10是右值
+//
+//	// const左值引用既可引用左值，也可引用右值。
+//	const int& ra3 = 10; // 正确，ra3引用了右值10
+//	const int& ra4 = a;  // 正确，ra4引用了左值a
+//	return 0;
+//}
+
+//int main()
+//{
+//	// 右值引用只能右值，不能引用左值。
+//	int&& r1 = 10; // 正确，10绑定到一个右值引用
+//
+//	// error C2440: “初始化”: 无法从“int”转换为“int &&”
+//	int a = 10;
+//	int&& r2 = a; // 错误，无法将左值a绑定到右值引用r2
+//
+//
+//	int&& r3 = std::move(a); //正确，右值引用可以引用move以后的左值
+//	return 0;
+//}
+
+
+namespace chen
+{
+	class string
+	{
+	public:
+		// 迭代器
+		typedef char* iterator;
+		iterator begin()
+		{
+			return _str;
+		}
+		iterator end()
+		{
+			return _str + _size;
+		}
+
+		// 默认构造
+		string(const char* str = "")
+			:_size(strlen(str))
+			, _capacity(_size)
+		{
+			std::cout << "string(char* str) -- 构造函数" << std::endl;
+			_str = new char[_capacity + 1];
+			strcpy(_str, str);
+		}
+
+		void swap(string& s)
+		{
+			std::swap(_str, s._str);
+			std::swap(_size, s._size);
+			std::swap(_capacity, s._capacity);
+		}
+
+		// 拷贝构造
+		string(const string& s)
+			:_str(nullptr)
+		{
+			std::cout << "string(const string& s) -- 深拷贝" << std::endl;
+			string tmp(s._str);
+			swap(tmp);
+		}
+
+		// 赋值重载
+		string& operator=(const string& s)
+		{
+			std::cout << "string& operator=(string s) -- 深拷贝" << std::endl;
+			string tmp(s);
+			swap(tmp);
+			return *this;
+		}
+
+		// 移动构造
+		string(string&& s)
+			:_str(nullptr)
+			, _size(0)
+			, _capacity(0)
+		{
+			std::cout << "string(string&& s) -- 移动语义" << std::endl;
+			swap(s);
+		}
+
+		// 移动赋值
+		string& operator=(string&& s)
+		{
+			std::cout << "string& operator=(string&& s) -- 移动语义" << std::endl;
+			swap(s);
+			return *this;
+		}
+
+		~string()
+		{
+			delete[] _str;
+			_str = nullptr;
+		}
+
+		char& operator[](size_t pos)
+		{
+			assert(pos < _size);
+			return _str[pos];
+		}
+
+		void reserve(size_t n)
+		{
+			if (n > _capacity)
+			{
+				char* tmp = new char[n + 1];
+				strcpy(tmp, _str);
+				delete[] _str;
+				_str = tmp;
+				_capacity = n;
+			}
+		}
+
+		void push_back(char ch)
+		{
+			if (_size >= _capacity)
+			{
+				size_t newcapacity = _capacity == 0 ? 4 : _capacity * 2;
+				reserve(newcapacity);
+			}
+			_str[_size] = ch;
+			++_size;
+			_str[_size] = '\0';
+		}
+
+		// string operator+=(char ch) 传值返回存在深拷贝
+		// string& operator+=(char ch) 传左值引用没有拷贝提高了效率
+		string& operator+=(char ch)
+		{
+			push_back(ch);
+			return *this;
+		}
+
+		const char* c_str() const
+		{
+			return _str;
+		}
+
+	private:
+		char* _str;
+		size_t _size;
+		size_t _capacity; // 不包含最后做标识的\0
 	};
 }
 
-int main() {
-	// 获取包装了 lambda 表达式的 std::function
-	std::function<int(int, int)> func1 = createLambda();
-	std::function<int(int, int)> func2 = createLambda();
-
-	// 输出 func1 和 func2 的地址
-	std::cout << "Address of func1: " << &func1 << std::endl;
-	std::cout << "Address of func2: " << &func2 << std::endl;
-
-	return 0;
+namespace chen
+{
+	chen::string to_string(int value)
+	{
+		bool flag = true;
+		if (value < 0)
+		{
+			flag = false;
+			value = 0 - value;
+		}
+		chen::string str;
+		while (value > 0)
+		{
+			int x = value % 10;
+			value /= 10;
+			str += (x + '0');
+		}
+		if (flag == false)
+		{
+			str += '-';
+		}
+		std::reverse(str.begin(), str.end());
+		return str;
+	}
 }
+
+//int main()
+//{
+//	chen::string s = std::move(chen::to_string(1234));
+//	return 0;
+//}
+
+
+//void Func(int& x)
+//{
+//	cout << "左值引用" << endl;
+//}
+//void Func(const int& x)
+//{
+//	cout << "const 左值引用" << endl;
+//}
+//void Func(int&& x)
+//{
+//	cout << "右值引用" << endl;
+//}
+//void Func(const int&& x)
+//{
+//	cout << "const 右值引用" << endl;
+//}
+//
+//template<class T>
+//void PerfectForward(T&& t)
+//{
+//	Func(std::forward<T>(t));
+//}
+//
+//int main()
+//{
+//	int a = 10;
+//	PerfectForward(a);       //左值
+//	PerfectForward(move(a)); //右值
+//
+//	const int b = 20;
+//	PerfectForward(b);       //const 左值
+//	PerfectForward(move(b)); //const 右值
+//
+//	return 0;
+//}
+
+//
+//#include <iostream>
+//
+//void Func(int&& x) 
+//{
+//	// 在函数内部，x 被当作左值引用
+//	x += 10;
+//	std::cout << "Inside Func: " << x << std::endl;
+//}
+//
+//int main() 
+//{
+//	int a = 5;
+//
+//	// 将右值引用传递给函数
+//	Func(std::move(a));
+//
+//	// 在这里，a 可能被移动了，但在函数外部，a 仍然是左值
+//	std::cout << "Outside Func: " << a << std::endl;
+//
+//	return 0;
+//}
+
+//#include <iostream>
+//#include <list>
+//#include <string>
+//#include <initializer_list>
+//using namespace std;
+//
+//int main()
+//{
+//	string str = static_cast<string>("hello world");
+//	cout << str << endl;
+//	auto il = { 1, 3, 4, 6 };
+//	list<int> arraylist1 = static_cast<list<int>>(il);
+//	list<int> arraylist2 = (list<int>)il;
+//
+//	for (auto e : arraylist1)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+
+//#include <algorithm>
+//#include <functional>
+//int main()
+//{
+//	int array[] = { 4,1,8,5,3,7,0,9,2,6 };
+//	// 默认按照小于比较，排出来结果是升序
+//	std::sort(array, array + sizeof(array) / sizeof(array[0]));
+//	// 如果需要降序，需要改变元素的比较规则，传入greater对象
+//	std::sort(array, array + sizeof(array) / sizeof(array[0]), greater<int>());
+//	return 0;
+//}
+
+//struct Goods
+//{
+//	string _name;  //名字
+//	double _price; //价格
+//	int _num;      //数量
+//};
+//
+//struct ComparePriceLess
+//{
+//	bool operator()(const Goods& g1, const Goods& g2)
+//	{
+//		return g1._price < g2._price;
+//	}
+//};
+//struct ComparePriceGreater
+//{
+//	bool operator()(const Goods& g1, const Goods& g2)
+//	{
+//		return g1._price > g2._price;
+//	}
+//};
+//struct CompareNumLess
+//{
+//	bool operator()(const Goods& g1, const Goods& g2)
+//	{
+//		return g1._num < g2._num;
+//	}
+//};
+//struct CompareNumGreater
+//{
+//	bool operator()(const Goods& g1, const Goods& g2)
+//	{
+//		return g1._num > g2._num;
+//	}
+//};
+//int main()
+//{
+//	vector<Goods> v = { { "苹果", 2.1, 300 }, { "香蕉", 3.3, 100 }, { "橙子", 2.2, 1000 }, { "菠萝", 1.5, 1 } };
+//	sort(v.begin(), v.end(), ComparePriceLess());    //按价格升序排序
+//	sort(v.begin(), v.end(), ComparePriceGreater()); //按价格降序排序
+//	sort(v.begin(), v.end(), CompareNumLess());      //按数量升序排序
+//	sort(v.begin(), v.end(), CompareNumGreater());   //按数量降序排序
+//	return 0;
+//}
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+//int main()
+//{
+//	// 最简单的lambda表达式, 该lambda表达式没有任何意义
+//	[] {};
+//
+//	// 省略参数列表和返回值类型，返回值类型由编译器推导为int
+//	int a = 3, b = 4;
+//	[=] {return a + 3; };
+//
+//	// 省略了返回值类型，无返回值类型
+//	auto fun1 = [&](int c) {b = a + c; };
+//	fun1(10);
+//	cout << a << " " << b << endl;
+//
+//	// 各部分都很完善的lambda函数
+//	auto fun2 = [=, &b](int c)->int {return b += a + c; };
+//	cout << fun2(10) << endl;
+//
+//	// 复制捕捉x
+//	int x = 10;
+//	auto add_x = [x](int a) mutable { x *= 2; return a + x; };
+//	cout << add_x(10) << endl;
+//	return 0;
+//}
+
+//int main()
+//{
+//	int a = 1, b = 2, c = 3, d = 4;
+//	auto func1 = [=, &a, &b]()
+//		{
+//			cout << "内部：" << endl;
+//			cout << typeid(typeid(typeid(a))).name() << endl;
+//		};
+//
+//	func1();
+//
+//	return 0;
+//}
+
+//void (*PF)();
+//int main()
+//{
+//	auto f1 = [] {cout << "hello world" << endl; };
+//	auto f2 = [] {cout << "hello world" << endl; };
+//
+//	// 此处先不解释原因，等lambda表达式底层实现原理看完后，大家就清楚了
+//	f1 = f2; // 编译失败--->提示找不到operator=()
+//
+//	// 允许使用一个lambda表达式拷贝构造一个新的副本
+//	auto f3(f2);
+//	f3();
+//
+//	// 可以将lambda表达式赋值给相同类型的函数指针
+//	PF = f2;
+//	PF();
+//
+//	return 0;
+//}
+
+//class Add
+//{
+//public:
+//	Add(int base)
+//		:_base(base)
+//	{}
+//	int operator()(int num)
+//	{
+//		return _base + num;
+//	}
+//private:
+//	int _base;
+//};
+//
+//int main()
+//{
+//	int base = 1;
+//
+//	//函数对象
+//	Add add1(base);
+//	//下面两种调用方法是一样的
+//	add1.operator()(1000);
+//	add1(1000);
+//
+//	//lambda表达式
+//	auto add2 = [base](int num)->int
+//		{
+//			return base + num;
+//		};
+//	add2(1000);
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int a = 10, b = 20;
+//	auto Swap1 = [](int& x, int& y)->void
+//		{
+//			int tmp = x;
+//			x = y;
+//			y = tmp;
+//		};
+//	auto Swap2 = [](int& x, int& y)->void
+//		{
+//			int tmp = x;
+//			x = y;
+//			y = tmp;
+//		};
+//	cout << typeid(Swap1).name() << endl; 
+//	cout << typeid(Swap2).name() << endl; 
+//	return 0;
+//}
